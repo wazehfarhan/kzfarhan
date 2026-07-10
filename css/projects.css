@@ -1,0 +1,15 @@
+/* Extra Projects section (separate from “Selected Work”) */
+
+#projects {
+  padding-top: var(--section-gap);
+}
+
+#projects .projects-list {
+  margin-top: 0;
+}
+
+.project-empty {
+  text-align: left;
+}
+
+/* Keep the same project card styling from styles.css */

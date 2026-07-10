@@ -1,0 +1,32 @@
+{
+  "note": "Fill this file with your real projects. Each project supports: { title, description, link, tags:[], shortCode, id }.",
+  "projects": [
+    {
+      "title": "AI Prompt Toolkit",
+      "description": "A Python-powered web toolkit for generating and refining AI prompts with clean UI.",
+      "details": "Designed a lightweight prompt management interface that helps generate, compare and improve AI prompts with versioned templates and evaluation notes.",
+      "link": "#",
+      "tags": ["Python", "Flask", "AI"],
+      "shortCode": "AI",
+      "id": "ai-prompt-toolkit"
+    },
+    {
+      "title": "Interactive Portfolio UI",
+      "description": "Animated portfolio experience with responsive layouts, project cards, and modern micro-interactions.",
+      "details": "Built a polished portfolio interface with smooth hover states, responsive cards, and an intuitive project browsing flow designed for recruiters and collaborators.",
+      "link": "#",
+      "tags": ["HTML", "CSS", "JavaScript"],
+      "shortCode": "UI",
+      "id": "interactive-portfolio"
+    },
+    {
+      "title": "Analytics Dashboard",
+      "description": "Data dashboard prototype visualizing metrics and insights with charts and responsive controls.",
+      "details": "Created a metrics-first dashboard prototype with interactive charts, clean layout, and mobile-friendly analytics cards for data-driven storytelling.",
+      "link": "#",
+      "tags": ["React", "Chart.js", "Node.js"],
+      "shortCode": "AD",
+      "id": "analytics-dashboard"
+    }
+  ]
+}
