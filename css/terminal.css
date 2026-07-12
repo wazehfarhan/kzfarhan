@@ -1,0 +1,254 @@
+/* terminal.css — macOS-style interactive terminal for resume */
+
+.section-terminal {
+  padding: 3rem 0 2rem;
+}
+
+.section-terminal .section-title {
+  margin-bottom: 1.5rem;
+}
+
+/* Terminal window frame */
+.terminal {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0c0c0c;
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.4),
+    0 0 1px rgba(255, 255, 255, 0.05);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* macOS-style title bar */
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: #1a1a1a;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  user-select: none;
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminal-dots span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: block;
+}
+
+.terminal-dot-red { background: #ff5f57; }
+.terminal-dot-yellow { background: #febc2e; }
+.terminal-dot-green { background: #28c840; }
+
+.terminal-title {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.72rem;
+  color: #666;
+  letter-spacing: 0.05em;
+}
+
+/* Terminal content area */
+.terminal-content {
+  padding: 1.2rem 1.3rem;
+  height: 380px;
+  overflow-y: auto;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: #d4d4d4;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.15) transparent;
+}
+
+.terminal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.terminal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+/* Command line: prompt + command text */
+.term-line {
+  margin-bottom: 0.15rem;
+  opacity: 0;
+  transform: translateY(6px);
+  animation: termFadeIn 0.35s ease forwards;
+}
+
+.term-prompt {
+  color: #74d64c;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+
+.term-command {
+  color: #f1eee8;
+  font-weight: 500;
+}
+
+/* Output block (follows a command) */
+.term-output {
+  margin: 0.3rem 0 1rem 1.2rem;
+  padding: 0;
+}
+
+.term-output-line {
+  color: #a8a29e;
+  opacity: 0;
+  transform: translateX(-8px);
+  animation: termSlideIn 0.3s ease forwards;
+}
+
+.term-output-line.term-divider {
+  color: rgba(255, 255, 255, 0.1);
+  margin: 0.35rem 0;
+}
+
+/* Colored labels in output */
+.term-label {
+  color: #d4a853;
+  font-weight: 600;
+}
+
+.term-value {
+  color: #d4d4d4;
+}
+
+/* Skill badges in output */
+.term-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.3rem 0;
+}
+
+.term-skill-badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(116, 214, 76, 0.2);
+  background: rgba(116, 214, 76, 0.06);
+  color: #74d64c;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+}
+
+/* Education timeline in output */
+.term-edu-item {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+  margin: 0.2rem 0;
+}
+
+.term-edu-year {
+  color: #569cd6;
+  min-width: 75px;
+  flex-shrink: 0;
+}
+
+.term-edu-detail {
+  color: #d4d4d4;
+}
+
+/* JSON-like output for experience */
+.term-json {
+  color: #d4d4d4;
+  margin: 0.2rem 0;
+}
+
+.term-json-key {
+  color: #569cd6;
+}
+
+.term-json-string {
+  color: #ce9178;
+}
+
+.term-json-bracket {
+  color: #d4a853;
+}
+
+/* Contact links */
+.term-link {
+  color: #569cd6;
+  text-decoration: underline;
+  text-decoration-color: rgba(86, 156, 214, 0.3);
+  transition: text-decoration-color 0.2s ease;
+}
+
+.term-link:hover {
+  text-decoration-color: #569cd6;
+}
+
+/* Blinking cursor */
+.term-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background: #74d64c;
+  margin-left: 2px;
+  animation: termBlink 1s step-end infinite;
+  vertical-align: text-bottom;
+}
+
+@keyframes termBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes termFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes termSlideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .terminal {
+    border-radius: 12px;
+  }
+
+  .terminal-content {
+    padding: 1rem;
+    font-size: 0.75rem;
+    height: 320px;
+  }
+
+  .term-output {
+    margin-left: 0.6rem;
+  }
+
+  .term-skills {
+    gap: 0.3rem;
+  }
+
+  .term-skill-badge {
+    font-size: 0.65rem;
+    padding: 0.15rem 0.45rem;
+  }
+}
