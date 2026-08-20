@@ -1,3 +1,30 @@
+/* =============================================================
+   Scroll-flip effect for the #work project cards
+   ============================================================= */
+
+/* The wrapper owns the 3D flip, driven per-frame by js/workFlip.js.
+   Perspective is applied inline via transform: perspective(...) so the
+   rotating wrapper renders with depth. The .project-card inside keeps
+   all of its existing hover transforms untouched. */
+#work .work-flip {
+  will-change: transform;
+  /* Reveal system only fades these in (staggered delay still applies);
+     the flip itself supplies the motion. */
+  transition-property: opacity;
+  transition-duration: 0.8s;
+  transition-timing-function: var(--ease-out-expo);
+  transform-origin: center center;
+}
+
+/* Touch devices use a static body + native scroll — the flip is
+   disabled there (workFlip.js also skips coarse pointers). */
+@media (pointer: coarse) {
+  #work .work-flip {
+    transform: none !important;
+    will-change: auto;
+  }
+}
+
 /* Extra Projects section (separate from “Selected Work”) */
 
 #projects {

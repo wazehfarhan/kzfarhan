@@ -30,13 +30,13 @@
     }, 450);
   };
 
-  // Expose globally for initProjectCarousel(card)
+ 
   window.initProjectCarousel = function (card) {
     if (!card) return;
     const mainImg = card.querySelector('.project-preview-main-img');
     const thumbs = Array.from(card.querySelectorAll('.project-preview-thumb'));
     if (!mainImg || thumbs.length === 0) return;
-    // Ensure one thumb is active
+
     let activeIdx = thumbs.findIndex((t) => t.classList.contains('active'));
     if (activeIdx === -1) {
       activeIdx = 0;
@@ -50,17 +50,17 @@
         window.crossfadeProjectImage(mainImg, src, alt);
       }
     };
-    // Set initial image
+
     updateMain(activeIdx);
-    // Auto cycle every 4 seconds
+  
     let interval = setInterval(() => {
-      // remove active from current thumb
+
       thumbs[activeIdx].classList.remove('active');
       activeIdx = (activeIdx + 1) % thumbs.length;
       thumbs[activeIdx].classList.add('active');
       updateMain(activeIdx);
     }, 4000);
-    // Cleanup on card removal (optional)
+
     card.addEventListener('remove', () => clearInterval(interval));
   };
 })();
