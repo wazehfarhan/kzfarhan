@@ -866,19 +866,6 @@
       </section>
 
       <!-- ============ PROJECTS ============ -->
-      <section class="section-projects container" id="projects">
-        <p class="section-label" data-reveal="fade-only">More Projects</p>
-        <div class="section-copy" data-reveal>
-          Explore additional examples of my work, from AI utilities to web apps
-          built with modern front-end and back-end stacks.
-        </div>
-        <div class="section-note" data-reveal>
-          Each project includes a short case summary, key technologies, and a
-          direct link to the live demo or repository.
-        </div>
-        <div class="projects-list" data-reveal-stagger id="projects-list"></div>
-      </section>
-
       <!-- ============ TESTIMONIALS ============ -->
       <section class="section-testimonials container" id="social-proof">
         <p class="section-label" data-reveal="fade-only">Social Proof</p>
@@ -935,7 +922,6 @@
         <a
           href="mailto:wzullah.farhan@gmail.com"
           class="contact-link"
-          data-reveal
           data-magnetic
         >
           wzullah.farhan@gmail.com
@@ -1014,170 +1000,5 @@
     <script src="js/workFlip.js"></script>
 
     <script defer src="js/app.js"></script>
-    <script>
-      // Render extra projects list from projects.json (used for the “Projects” section)
-      (function () {
-        const el = document.getElementById("projects-list");
-        if (!el) return;
-
-        const fallback = () => {
-          el.innerHTML =
-            "<div class='project-empty' style='padding:1rem 0;color:var(--text-secondary);font-family:var(--font-mono)'>No projects loaded.</div>";
-          bindProjectCards([]);
-        };
-
-        const render = (projects) => {
-          if (!Array.isArray(projects) || projects.length === 0) {
-            fallback();
-            return;
-          }
-
-          el.innerHTML = projects
-            .map((p, idx) => {
-              const num = String(idx + 1).padStart(2, "0");
-              const tech = Array.isArray(p.tags)
-                ? p.tags.map((t) => `<span>${t}</span>`).join("")
-                : "";
-              const href = p.link ? p.link : "#";
-              const external = p.link && !p.link.startsWith("#");
-              const target = external ? "_blank" : "_self";
-              const rel = external ? "noopener" : "";
-
-              return `
-                <a href="${href}" target="${target}" rel="${rel}" class="project-card" data-project="${p.id || num}">
-                  <span class="project-number">${num}</span>
-                  <div class="project-info">
-                    <h3 class="project-title">${p.title || "Project"}</h3>
-                    <p class="project-category">${p.description || ""}</p>
-                    <div class="project-tech">${tech}</div>
-                  </div>
-                  <div class="project-preview">
-                    <div class="project-preview-placeholder">${p.shortCode || num}</div>
-                  </div>
-                </a>
-              `;
-            })
-            .join("");
-
-          bindProjectCards(projects);
-        };
-
-        const openModalButton = document.getElementById("project-modal-close");
-        const projectModalOverlay = document.getElementById("project-modal");
-        const projectModalTitle = document.getElementById(
-          "project-modal-title",
-        );
-        const projectModalDescription = document.querySelector(
-          ".project-modal-description",
-        );
-        const projectModalStack = document.querySelector(
-          ".project-modal-stack",
-        );
-        const projectModalLink = document.getElementById("project-modal-link");
-
-        const projectMap = new Map();
-
-        const closeProjectModal = () => {
-          projectModalOverlay.classList.remove("open");
-          projectModalOverlay.setAttribute("aria-hidden", "true");
-          document.body.classList.remove("modal-open");
-        };
-
-        const openProjectModal = (project) => {
-          if (!project) return;
-          projectModalTitle.textContent = project.title || "Project Details";
-          projectModalDescription.textContent =
-            project.details ||
-            project.description ||
-            "More about this project.";
-          projectModalStack.innerHTML = Array.isArray(project.tags)
-            ? project.tags.map((tag) => `<span>${tag}</span>`).join("")
-            : "";
-          projectModalLink.href = project.link || "#";
-          projectModalLink.textContent = project.link
-            ? "Visit project"
-            : "View project";
-          if (!project.link)
-            projectModalLink.setAttribute("aria-disabled", "true");
-          else projectModalLink.removeAttribute("aria-disabled");
-          projectModalOverlay.classList.add("open");
-          projectModalOverlay.setAttribute("aria-hidden", "false");
-          document.body.classList.add("modal-open");
-        };
-
-        const bindProjectCards = (projects) => {
-          projectMap.clear();
-          projects.forEach((project) => {
-            if (project.id) projectMap.set(project.id, project);
-          });
-
-          document.querySelectorAll(".project-card").forEach((card) => {
-            card.addEventListener("click", (event) => {
-              const href = card.getAttribute("href");
-              if (href && href !== "#") return;
-
-              event.preventDefault();
-              const projectId = card.dataset.project;
-              const project = projectMap.get(projectId);
-
-              if (project) {
-                openProjectModal(project);
-                return;
-              }
-
-              const title = card.querySelector(".project-title")?.textContent;
-              const description =
-                card.querySelector(".project-category")?.textContent;
-              const tags = Array.from(
-                card.querySelectorAll(".project-tech span"),
-              ).map((tag) => tag.textContent);
-
-              openProjectModal({
-                title: title || "Project",
-                description: description || "Project details.",
-                tags,
-              });
-            });
-          });
-        };
-
-        projectModalOverlay.addEventListener("click", (event) => {
-          if (event.target === projectModalOverlay) closeProjectModal();
-        });
-
-        openModalButton.addEventListener("click", closeProjectModal);
-        document.addEventListener("keydown", (event) => {
-          if (
-            event.key === "Escape" &&
-            projectModalOverlay.classList.contains("open")
-          ) {
-            closeProjectModal();
-          }
-        });
-
-        const scheduleStatsRefresh = () => {
-          if (window.refreshHeroStats) {
-            window.refreshHeroStats();
-          } else {
-            window.addEventListener(
-              "load",
-              () => window.refreshHeroStats && window.refreshHeroStats(),
-              { once: true },
-            );
-          }
-        };
-
-        fetch("projects.json")
-          .then((r) => {
-            if (!r.ok) throw new Error("Failed to load projects.json");
-            return r.json();
-          })
-          .then((data) => {
-            render(data.projects || []);
-          })
-          .catch(() => fallback())
-          .finally(scheduleStatsRefresh);
-      })();
-    </script>
   </body>
 </html>
